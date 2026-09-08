@@ -1,0 +1,306 @@
+<Window x:Class="JobFlow.Desktop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="JobFlow Desktop" Height="860" Width="1380" MinHeight="720" MinWidth="1080"
+        Background="{DynamicResource CanvasBrush}" WindowStartupLocation="CenterScreen"
+        UseLayoutRounding="True" SnapsToDevicePixels="True">
+  <Grid>
+    <Grid x:Name="LoginPanel" Background="{DynamicResource CanvasBrush}">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="1.08*" />
+        <ColumnDefinition Width="0.92*" />
+      </Grid.ColumnDefinitions>
+
+      <Border Margin="22" CornerRadius="24">
+        <Border.Background>
+          <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#294338" Offset="0" />
+            <GradientStop Color="#395B4B" Offset="0.58" />
+            <GradientStop Color="#607768" Offset="1" />
+          </LinearGradientBrush>
+        </Border.Background>
+        <Grid ClipToBounds="True">
+          <Ellipse Width="420" Height="420" Fill="#16FFFFFF" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-170,-130,0" />
+          <Ellipse Width="280" Height="280" Fill="#10FFFFFF" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="-100,0,0,-120" />
+          <StackPanel Margin="58" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal">
+              <Border Width="44" Height="44" CornerRadius="13" Background="#DCE8A3" BorderBrush="#DCE8A3" BorderThickness="1">
+                <TextBlock Text="J" Foreground="#345347" FontSize="23" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" />
+              </Border>
+              <StackPanel Margin="13,1,0,0">
+                <TextBlock Text="JOBFLOW" Foreground="White" FontSize="18" FontWeight="Bold" />
+                <TextBlock Text="DESKTOP WORKSPACE" Foreground="#DCE8A3" FontSize="10" FontWeight="SemiBold" />
+              </StackPanel>
+            </StackPanel>
+            <TextBlock Text="让每一次投递，&#x0a;都有清晰的下一步。" Foreground="#F5F3E8" FontSize="38" FontWeight="SemiBold" LineHeight="52" Margin="0,46,0,18" />
+            <TextBlock Text="从岗位记录、简历版本到面试提醒，在一个本地优先的工作区里持续推进求职进程。"
+                       Foreground="#C9D3CC" FontSize="15" LineHeight="26" TextWrapping="Wrap" MaxWidth="510" HorizontalAlignment="Left" />
+            <WrapPanel Margin="0,34,0,0">
+              <Border Background="#1AFFFFFF" CornerRadius="20" Padding="13,7" Margin="0,0,10,0"><TextBlock Text="✓ 本地数据" Foreground="White" FontSize="12" /></Border>
+              <Border Background="#1AFFFFFF" CornerRadius="20" Padding="13,7" Margin="0,0,10,0"><TextBlock Text="✓ 多端协同" Foreground="White" FontSize="12" /></Border>
+              <Border Background="#1AFFFFFF" CornerRadius="20" Padding="13,7"><TextBlock Text="✓ 自动提醒" Foreground="White" FontSize="12" /></Border>
+            </WrapPanel>
+          </StackPanel>
+        </Grid>
+      </Border>
+
+      <Grid Grid.Column="1">
+        <Border Width="440" Padding="38" Style="{StaticResource CardStyle}" HorizontalAlignment="Center" VerticalAlignment="Center">
+          <Border.Effect>
+            <DropShadowEffect Color="#30332D" BlurRadius="28" ShadowDepth="8" Opacity="0.12" />
+          </Border.Effect>
+          <StackPanel>
+            <TextBlock Text="欢迎回来" Style="{StaticResource PageTitleStyle}" />
+            <TextBlock Text="连接你的 JobFlow 服务，继续今天的求职计划。" Style="{StaticResource CaptionStyle}" Margin="0,7,0,26" />
+            <TextBlock Text="API 地址" Style="{StaticResource FieldLabelStyle}" />
+            <TextBox x:Name="LoginApiUrlInput" />
+            <TextBlock Text="邮箱" Style="{StaticResource FieldLabelStyle}" />
+            <TextBox x:Name="EmailInput" />
+            <TextBlock Text="密码（至少 8 位）" Style="{StaticResource FieldLabelStyle}" />
+            <PasswordBox x:Name="PasswordInput" />
+            <Grid Margin="0,6,0,0">
+              <Grid.ColumnDefinitions><ColumnDefinition /><ColumnDefinition /></Grid.ColumnDefinitions>
+              <Button x:Name="LoginButton" Content="登录" Style="{StaticResource PrimaryButtonStyle}" Margin="0,0,6,0" Click="LoginButton_Click" />
+              <Button Grid.Column="1" x:Name="RegisterButton" Content="创建账户" Margin="6,0,0,0" Click="RegisterButton_Click" />
+            </Grid>
+            <Border Background="#EDF1D8" CornerRadius="8" Padding="12,10" Margin="0,18,0,0">
+              <TextBlock Text="默认使用安装包内置的本机服务，无需 Docker。连接其他服务时请填写 HTTPS API 地址。" Foreground="#526D60" FontSize="11.5" TextWrapping="Wrap" />
+            </Border>
+            <TextBlock x:Name="LoginStatus" Foreground="{StaticResource DangerBrush}" TextWrapping="Wrap" Margin="1,12,0,0" />
+          </StackPanel>
+        </Border>
+      </Grid>
+    </Grid>
+
+    <DockPanel x:Name="Workspace" Visibility="Collapsed">
+      <Border DockPanel.Dock="Top" Background="White" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,0,1" Padding="24,14">
+        <DockPanel>
+          <StackPanel Orientation="Horizontal" DockPanel.Dock="Left" VerticalAlignment="Center">
+            <Border Width="38" Height="38" CornerRadius="11" Background="{StaticResource PrimaryBrush}">
+              <TextBlock Text="J" Foreground="White" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Border>
+            <StackPanel Margin="11,0,25,0" VerticalAlignment="Center">
+              <TextBlock Text="JobFlow" FontSize="18" FontWeight="Bold" Foreground="{DynamicResource InkBrush}" />
+              <TextBlock Text="求职工作区" Style="{StaticResource CaptionStyle}" FontSize="10.5" />
+            </StackPanel>
+            <Border Background="#F2F4E7" CornerRadius="16" Padding="10,5" Margin="0,0,10,0">
+              <StackPanel Orientation="Horizontal">
+                <Ellipse Width="7" Height="7" Fill="{StaticResource AccentBrush}" Margin="0,0,7,0" />
+                <TextBlock x:Name="ConnectionStatus" Text="API 已连接" Foreground="#526D60" FontSize="11.5" FontWeight="SemiBold" />
+              </StackPanel>
+            </Border>
+            <Border Background="{DynamicResource SurfaceMutedBrush}" CornerRadius="16" Padding="10,5">
+              <TextBlock x:Name="QueueStatus" Text="离线队列：0" Foreground="{DynamicResource MutedBrush}" FontSize="11.5" />
+            </Border>
+          </StackPanel>
+          <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+            <Button Content="同步队列" Click="SyncButton_Click" />
+            <Button Content="刷新数据" Style="{StaticResource PrimaryButtonStyle}" Margin="0" Click="RefreshButton_Click" />
+          </StackPanel>
+        </DockPanel>
+      </Border>
+
+      <Grid Margin="24,18,24,16">
+        <Grid.RowDefinitions><RowDefinition Height="*" /><RowDefinition Height="Auto" /></Grid.RowDefinitions>
+        <TabControl x:Name="WorkspaceTabs">
+          <TabItem Header="投递管理">
+            <Grid Margin="0,18,0,0">
+              <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="*" /></Grid.RowDefinitions>
+              <DockPanel Margin="2,0,2,16">
+                <StackPanel DockPanel.Dock="Left">
+                  <TextBlock Text="投递管理" Style="{StaticResource PageTitleStyle}" />
+                  <TextBlock Text="集中查看岗位进度，并随时记录下一步行动。" Style="{StaticResource CaptionStyle}" Margin="0,5,0,0" />
+                </StackPanel>
+                <Button Content="＋ 新增投递" Style="{StaticResource PrimaryButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0" Click="ShowComposer_Click" />
+              </DockPanel>
+              <Border Grid.Row="1" Style="{StaticResource CardStyle}" Padding="14,9" Margin="0,0,0,14">
+                <DockPanel>
+                  <StackPanel Orientation="Horizontal" DockPanel.Dock="Left" VerticalAlignment="Center">
+                    <TextBox x:Name="SearchInput" Width="240" Margin="0,0,10,0" ToolTip="搜索公司、岗位或职位描述" />
+                    <ComboBox x:Name="FilterStatusInput" Width="132" Margin="0,0,10,0" SelectionChanged="ApplicationFilter_Changed">
+                      <ComboBoxItem Tag="" IsSelected="True">全部阶段</ComboBoxItem><ComboBoxItem Tag="saved">待投递</ComboBoxItem><ComboBoxItem Tag="applied">已投递</ComboBoxItem><ComboBoxItem Tag="assessment">笔试</ComboBoxItem><ComboBoxItem Tag="interview">面试</ComboBoxItem><ComboBoxItem Tag="offer">Offer</ComboBoxItem><ComboBoxItem Tag="closed">已结束</ComboBoxItem>
+                    </ComboBox>
+                    <CheckBox x:Name="ArchivedInput" Content="查看归档" Margin="2,0,14,0" Click="ApplicationFilter_Changed" />
+                    <Button Content="查询" Click="SearchButton_Click" />
+                  </StackPanel>
+                  <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <ComboBox x:Name="BatchStatusInput" Width="120" Margin="0,0,8,0"><ComboBoxItem Tag="">批量状态…</ComboBoxItem><ComboBoxItem Tag="saved">待投递</ComboBoxItem><ComboBoxItem Tag="applied">已投递</ComboBoxItem><ComboBoxItem Tag="assessment">笔试</ComboBoxItem><ComboBoxItem Tag="interview">面试</ComboBoxItem><ComboBoxItem Tag="offer">Offer</ComboBoxItem><ComboBoxItem Tag="closed">已结束</ComboBoxItem></ComboBox>
+                    <Button Content="批量应用" Click="BulkStatusButton_Click" />
+                    <Button Content="合并选中 2 项" Click="MergeSelectedButton_Click" />
+                    <Button Content="导入 CSV" Click="ImportCsvButton_Click" />
+                    <Button Content="导出 CSV" Click="ExportCsvButton_Click" />
+                    <Button Content="导出 JSON" Margin="0" Click="ExportJsonButton_Click" />
+                  </StackPanel>
+                </DockPanel>
+              </Border>
+              <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="410" /></Grid.ColumnDefinitions>
+                <Border Style="{StaticResource CardStyle}" Padding="0" Margin="0,0,14,0">
+                  <DataGrid x:Name="ApplicationList" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Extended" SelectionChanged="ApplicationList_SelectionChanged">
+                    <DataGrid.Columns>
+                      <DataGridTextColumn Header="公司与岗位" Binding="{Binding Summary}" Width="2*" />
+                      <DataGridTextColumn Header="阶段 · 地点 · 来源" Binding="{Binding Metadata}" Width="2*" />
+                      <DataGridTextColumn Header="下一步" Binding="{Binding NextActionLabel}" Width="*" />
+                    </DataGrid.Columns>
+                  </DataGrid>
+                </Border>
+                <Border Grid.Column="1" Style="{StaticResource CardStyle}" Padding="20,18">
+                  <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="0,0,5,8">
+                      <TextBlock Text="投递详情" Style="{StaticResource SectionTitleStyle}" />
+                      <TextBlock Text="选择左侧记录后可编辑详细信息。" Style="{StaticResource CaptionStyle}" Margin="0,4,0,17" />
+                      <TextBlock Text="公司" Style="{StaticResource FieldLabelStyle}" /><ComboBox x:Name="EditCompanyInput" DisplayMemberPath="Name" SelectedValuePath="Id" />
+                      <TextBlock Text="岗位名称" Style="{StaticResource FieldLabelStyle}" /><TextBox x:Name="EditTitleInput" />
+                      <Grid><Grid.ColumnDefinitions><ColumnDefinition /><ColumnDefinition /></Grid.ColumnDefinitions>
+                        <StackPanel Margin="0,0,6,0"><TextBlock Text="地点" Style="{StaticResource FieldLabelStyle}" /><TextBox x:Name="EditLocationInput" /></StackPanel>
+                        <StackPanel Grid.Column="1" Margin="6,0,0,0"><TextBlock Text="来源" Style="{StaticResource FieldLabelStyle}" /><TextBox x:Name="EditSourceInput" /></StackPanel>
+                      </Grid>
+                      <TextBlock Text="岗位链接" Style="{StaticResource FieldLabelStyle}" /><TextBox x:Name="EditSourceUrlInput" />
+                      <TextBlock Text="职位描述" Style="{StaticResource FieldLabelStyle}" /><TextBox x:Name="EditJdInput" Height="76" AcceptsReturn="True" TextWrapping="Wrap" VerticalContentAlignment="Top" />
+                      <Grid><Grid.ColumnDefinitions><ColumnDefinition /><ColumnDefinition /></Grid.ColumnDefinitions>
+                        <StackPanel Margin="0,0,6,0"><TextBlock Text="阶段" Style="{StaticResource FieldLabelStyle}" /><ComboBox x:Name="EditStatusInput"><ComboBoxItem Tag="saved">待投递</ComboBoxItem><ComboBoxItem Tag="applied">已投递</ComboBoxItem><ComboBoxItem Tag="assessment">笔试</ComboBoxItem><ComboBoxItem Tag="interview">面试</ComboBoxItem><ComboBoxItem Tag="offer">Offer</ComboBoxItem><ComboBoxItem Tag="closed">已结束</ComboBoxItem></ComboBox></StackPanel>
+                        <StackPanel Grid.Column="1" Margin="6,0,0,0"><TextBlock Text="简历版本" Style="{StaticResource FieldLabelStyle}" /><ComboBox x:Name="EditResumeInput" DisplayMemberPath="Name" SelectedValuePath="Id" /></StackPanel>
+                      </Grid>
+                      <TextBlock Text="下一步时间（yyyy-MM-dd HH:mm）" Style="{StaticResource FieldLabelStyle}" /><TextBox x:Name="EditNextActionInput" />
+                      <TextBlock Text="备注" Style="{StaticResource FieldLabelStyle}" /><TextBox x:Name="EditNotesInput" Height="66" AcceptsReturn="True" TextWrapping="Wrap" VerticalContentAlignment="Top" />
+                      <TextBlock Text="标签（逗号分隔）" Style="{StaticResource FieldLabelStyle}" /><TextBox x:Name="EditTagsInput" />
+                      <TextBlock Text="自定义字段（每行 键: 值）" Style="{StaticResource FieldLabelStyle}" /><TextBox x:Name="EditCustomFieldsInput" Height="58" AcceptsReturn="True" TextWrapping="Wrap" />
+                      <WrapPanel Margin="0,3,0,0">
+                        <Button Content="保存修改" Style="{StaticResource PrimaryButtonStyle}" Click="SaveApplicationButton_Click" />
+                        <Button x:Name="ArchiveButton" Content="归档" Click="ArchiveButton_Click" />
+                        <Button Content="删除" Style="{StaticResource DangerButtonStyle}" Click="DeleteApplicationButton_Click" />
+                        <Button Content="查看时间线" Click="LoadTimelineButton_Click" />
+                        <Button Content="撤销状态" Click="UndoStatusButton_Click" />
+                        <Button Content="本地匹配" Click="MatchButton_Click" />
+                      </WrapPanel>
+                      <TextBlock x:Name="MatchResultText" TextWrapping="Wrap" Foreground="{DynamicResource MutedBrush}" Margin="1,8,0,0" />
+                      <TextBlock Text="面试轮次" Style="{StaticResource FieldLabelStyle}" Margin="1,15,0,7" />
+                      <Grid><Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="1.4*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions><TextBox x:Name="RoundNameInput" Text="一面" Margin="0,0,5,0" /><TextBox x:Name="RoundAtInput" Grid.Column="1" ToolTip="yyyy-MM-dd HH:mm" Margin="0,0,5,0" /><Button Grid.Column="2" Content="添加" Margin="0" Click="AddInterviewButton_Click" /></Grid>
+                      <DataGrid x:Name="InterviewList" AutoGenerateColumns="False" IsReadOnly="True" Height="125" Margin="0,8,0,0"><DataGrid.Columns><DataGridTextColumn Header="轮次" Binding="{Binding RoundName}" Width="*" /><DataGridTextColumn Header="时间" Binding="{Binding TimeLabel}" Width="130" /><DataGridTextColumn Header="结果" Binding="{Binding StateLabel}" Width="70" /></DataGrid.Columns></DataGrid>
+                      <Button Content="删除选中面试" Style="{StaticResource DangerButtonStyle}" HorizontalAlignment="Left" Margin="0,7,0,0" Click="DeleteInterviewButton_Click" />
+                      <TextBlock Text="变更时间线" Style="{StaticResource FieldLabelStyle}" Margin="1,15,0,7" />
+                      <DataGrid x:Name="TimelineList" AutoGenerateColumns="False" IsReadOnly="True" Height="150">
+                        <DataGrid.Columns><DataGridTextColumn Header="变化" Binding="{Binding Change}" Width="*" /><DataGridTextColumn Header="时间" Binding="{Binding TimeLabel}" Width="140" /></DataGrid.Columns>
+                      </DataGrid>
+                    </StackPanel>
+                  </ScrollViewer>
+                </Border>
+              </Grid>
+            </Grid>
+          </TabItem>
+
+          <TabItem Header="下一步日程">
+            <Grid Margin="0,18,0,0">
+              <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="*" /></Grid.RowDefinitions>
+              <DockPanel Margin="2,0,0,16"><StackPanel><TextBlock Text="下一步日程" Style="{StaticResource PageTitleStyle}" /><TextBlock Text="按时间查看所有行动节点，到期事项会优先显示。" Style="{StaticResource CaptionStyle}" Margin="0,5,0,0" /></StackPanel><Button Content="导出 ICS 日历" HorizontalAlignment="Right" Click="ExportCalendarButton_Click" /></DockPanel>
+              <Border Grid.Row="1" Style="{StaticResource CardStyle}" Padding="0">
+                <DataGrid x:Name="ScheduleList" AutoGenerateColumns="False" IsReadOnly="True">
+                  <DataGrid.Columns><DataGridTextColumn Header="状态" Binding="{Binding ScheduleState}" Width="100" /><DataGridTextColumn Header="时间" Binding="{Binding NextActionLabel}" Width="170" /><DataGridTextColumn Header="公司与岗位" Binding="{Binding Summary}" Width="2*" /><DataGridTextColumn Header="阶段 · 地点 · 来源" Binding="{Binding Metadata}" Width="2*" /></DataGrid.Columns>
+                </DataGrid>
+              </Border>
+            </Grid>
+          </TabItem>
+
+          <TabItem Header="简历管理">
+            <Grid Margin="0,18,0,0"><Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="*" /></Grid.RowDefinitions>
+              <StackPanel Margin="2,0,0,16"><TextBlock Text="简历管理" Style="{StaticResource PageTitleStyle}" /><TextBlock Text="维护不同方向的简历版本，并追踪实际使用情况。" Style="{StaticResource CaptionStyle}" Margin="0,5,0,0" /></StackPanel>
+              <Border Grid.Row="1" Style="{StaticResource CardStyle}" Padding="14,9" Margin="0,0,0,14"><StackPanel><DockPanel><TextBox x:Name="ResumeNameInput" Width="260" Margin="0,0,10,0" ToolTip="输入版本名称" /><WrapPanel><Button Content="创建空版本" Click="CreateResumeButton_Click" /><Button Content="上传文件" Style="{StaticResource PrimaryButtonStyle}" Click="UploadResumeButton_Click" /><Button Content="重命名" Click="RenameResumeButton_Click" /><Button Content="下载" Click="DownloadResumeButton_Click" /><Button Content="删除" Style="{StaticResource DangerButtonStyle}" Click="DeleteResumeButton_Click" /></WrapPanel></DockPanel><DockPanel Margin="0,9,0,0"><TextBox x:Name="ResumeTextInput" Height="54" AcceptsReturn="True" TextWrapping="Wrap" ToolTip="粘贴用于本地 JD 匹配的简历正文" /><Button Content="保存本地匹配文本" HorizontalAlignment="Right" Margin="8,0,0,0" Click="SaveResumeTextButton_Click" /></DockPanel></StackPanel></Border>
+              <Border Grid.Row="2" Style="{StaticResource CardStyle}" Padding="0"><DataGrid x:Name="ResumeList" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="ResumeList_SelectionChanged"><DataGrid.Columns><DataGridTextColumn Header="版本名称" Binding="{Binding Name}" Width="*" /><DataGridTextColumn Header="文件" Binding="{Binding FileLabel}" Width="2*" /><DataGridCheckBoxColumn Header="已上传" Binding="{Binding HasFile}" Width="90" /></DataGrid.Columns></DataGrid></Border>
+            </Grid>
+          </TabItem>
+
+          <TabItem Header="公司管理">
+            <Grid Margin="0,18,0,0"><Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="*" /></Grid.RowDefinitions>
+              <StackPanel Margin="2,0,0,16"><TextBlock Text="公司管理" Style="{StaticResource PageTitleStyle}" /><TextBlock Text="沉淀目标公司信息，保持岗位记录整洁一致。" Style="{StaticResource CaptionStyle}" Margin="0,5,0,0" /></StackPanel>
+              <Grid Grid.Row="1"><Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="370" /></Grid.ColumnDefinitions>
+                <Border Style="{StaticResource CardStyle}" Padding="0" Margin="0,0,14,0"><DataGrid x:Name="CompanyList" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="CompanyList_SelectionChanged"><DataGrid.Columns><DataGridTextColumn Header="公司" Binding="{Binding Name}" Width="*" /><DataGridTextColumn Header="网站" Binding="{Binding Website}" Width="2*" /></DataGrid.Columns></DataGrid></Border>
+                <Border Grid.Column="1" Style="{StaticResource CardStyle}"><StackPanel><TextBlock Text="公司资料" Style="{StaticResource SectionTitleStyle}" /><TextBlock Text="选择公司后可修改名称与网站。" Style="{StaticResource CaptionStyle}" Margin="0,4,0,18" /><TextBlock Text="公司名称" Style="{StaticResource FieldLabelStyle}" /><TextBox x:Name="CompanyNameInput" /><TextBlock Text="网站" Style="{StaticResource FieldLabelStyle}" /><TextBox x:Name="CompanyWebsiteInput" /><WrapPanel><Button Content="新增" Style="{StaticResource PrimaryButtonStyle}" Click="CreateCompanyButton_Click" /><Button Content="保存修改" Click="UpdateCompanyButton_Click" /><Button Content="删除" Style="{StaticResource DangerButtonStyle}" Click="DeleteCompanyButton_Click" /></WrapPanel><Border Background="#F3E5DD" CornerRadius="8" Padding="11,9" Margin="0,14,0,0"><TextBlock Text="存在关联岗位时，需要先删除对应投递与岗位。" Foreground="#9A5944" FontSize="11.5" TextWrapping="Wrap" /></Border></StackPanel></Border>
+              </Grid>
+            </Grid>
+          </TabItem>
+
+          <TabItem Header="数据分析">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,18,0,0"><StackPanel>
+              <StackPanel Margin="2,0,0,16"><TextBlock Text="数据分析" Style="{StaticResource PageTitleStyle}" /><TextBlock Text="从阶段转化、渠道和简历表现中识别有效策略。" Style="{StaticResource CaptionStyle}" Margin="0,5,0,0" /></StackPanel>
+              <UniformGrid Columns="4" Margin="0,0,0,14">
+                <Border Style="{StaticResource MetricCardStyle}"><StackPanel><TextBlock Text="总投递" Style="{StaticResource CaptionStyle}" /><TextBlock x:Name="MetricTotal" FontSize="28" FontWeight="SemiBold" Margin="0,8,0,0" /><Border Height="3" Width="34" CornerRadius="2" Background="{StaticResource PrimaryBrush}" HorizontalAlignment="Left" Margin="0,12,0,0" /></StackPanel></Border>
+                <Border Style="{StaticResource MetricCardStyle}"><StackPanel><TextBlock Text="进行中" Style="{StaticResource CaptionStyle}" /><TextBlock x:Name="MetricActive" FontSize="28" FontWeight="SemiBold" Margin="0,8,0,0" /><Border Height="3" Width="34" CornerRadius="2" Background="{StaticResource AccentBrush}" HorizontalAlignment="Left" Margin="0,12,0,0" /></StackPanel></Border>
+                <Border Style="{StaticResource MetricCardStyle}"><StackPanel><TextBlock Text="Offer 率" Style="{StaticResource CaptionStyle}" /><TextBlock x:Name="MetricOfferRate" FontSize="28" FontWeight="SemiBold" Margin="0,8,0,0" /><Border Height="3" Width="34" CornerRadius="2" Background="#E9814D" HorizontalAlignment="Left" Margin="0,12,0,0" /></StackPanel></Border>
+                <Border Style="{StaticResource MetricCardStyle}" Margin="0"><StackPanel><TextBlock Text="平均 Offer 周期" Style="{StaticResource CaptionStyle}" /><TextBlock x:Name="MetricOfferDays" FontSize="28" FontWeight="SemiBold" Margin="0,8,0,0" /><Border Height="3" Width="34" CornerRadius="2" Background="#B46F51" HorizontalAlignment="Left" Margin="0,12,0,0" /></StackPanel></Border>
+              </UniformGrid>
+              <Border Style="{StaticResource CardStyle}" Padding="0" Margin="0,0,0,14"><StackPanel><TextBlock Text="阶段表现" Style="{StaticResource SectionTitleStyle}" Margin="18,16,18,10" /><DataGrid x:Name="StageInsightList" AutoGenerateColumns="False" IsReadOnly="True" Height="210"><DataGrid.Columns><DataGridTextColumn Header="阶段" Binding="{Binding StatusLabel}" Width="*" /><DataGridTextColumn Header="当前" Binding="{Binding CurrentCount}" Width="*" /><DataGridTextColumn Header="曾到达" Binding="{Binding EverReached}" Width="*" /><DataGridTextColumn Header="平均天数" Binding="{Binding AverageDaysLabel}" Width="*" /></DataGrid.Columns></DataGrid></StackPanel></Border>
+              <Grid><Grid.ColumnDefinitions><ColumnDefinition /><ColumnDefinition /><ColumnDefinition /></Grid.ColumnDefinitions>
+                <Border Style="{StaticResource CardStyle}" Padding="0" Margin="0,0,10,0"><StackPanel><TextBlock Text="来源表现" Style="{StaticResource SectionTitleStyle}" Margin="16,14,16,8" /><DataGrid x:Name="SourceInsightList" AutoGenerateColumns="True" IsReadOnly="True" Height="205" /></StackPanel></Border>
+                <Border Grid.Column="1" Style="{StaticResource CardStyle}" Padding="0" Margin="5,0"><StackPanel><TextBlock Text="简历表现" Style="{StaticResource SectionTitleStyle}" Margin="16,14,16,8" /><DataGrid x:Name="ResumeInsightList" AutoGenerateColumns="True" IsReadOnly="True" Height="205" /></StackPanel></Border>
+                <Border Grid.Column="2" Style="{StaticResource CardStyle}" Padding="0" Margin="10,0,0,0"><StackPanel><TextBlock Text="周趋势" Style="{StaticResource SectionTitleStyle}" Margin="16,14,16,8" /><DataGrid x:Name="WeeklyTrendList" AutoGenerateColumns="True" IsReadOnly="True" Height="205" /></StackPanel></Border>
+              </Grid>
+            </StackPanel></ScrollViewer>
+          </TabItem>
+
+          <TabItem Header="提醒中心">
+            <Grid Margin="0,18,0,0"><Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="*" /></Grid.RowDefinitions>
+              <StackPanel Margin="2,0,0,16"><TextBlock Text="提醒中心" Style="{StaticResource PageTitleStyle}" /><TextBlock Text="聚合待跟进、长时间无反馈和每周汇总。" Style="{StaticResource CaptionStyle}" Margin="0,5,0,0" /></StackPanel>
+              <Border Grid.Row="1" Style="{StaticResource CardStyle}" Padding="14,9" Margin="0,0,0,14"><DockPanel><CheckBox x:Name="UnreadOnlyInput" Content="只看未读" Margin="0,0,14,0" /><Button Content="刷新提醒" Click="RefreshNotificationsButton_Click" /><Button Content="标记已读" Style="{StaticResource PrimaryButtonStyle}" Click="MarkNotificationReadButton_Click" /></DockPanel></Border>
+              <Border Grid.Row="2" Style="{StaticResource CardStyle}" Padding="0"><DataGrid x:Name="NotificationList" AutoGenerateColumns="False" IsReadOnly="True"><DataGrid.Columns><DataGridTextColumn Header="状态" Binding="{Binding State}" Width="80" /><DataGridTextColumn Header="标题" Binding="{Binding Title}" Width="*" /><DataGridTextColumn Header="内容" Binding="{Binding Body}" Width="2*" /><DataGridTextColumn Header="时间" Binding="{Binding TimeLabel}" Width="160" /></DataGrid.Columns></DataGrid></Border>
+            </Grid>
+          </TabItem>
+
+          <TabItem Header="设置与账户">
+            <ScrollViewer Margin="0,18,0,0"><StackPanel Width="620" HorizontalAlignment="Left">
+              <StackPanel Margin="2,0,0,16"><TextBlock Text="设置与账户" Style="{StaticResource PageTitleStyle}" /><TextBlock Text="管理服务连接、系统启动方式和账户安全。" Style="{StaticResource CaptionStyle}" Margin="0,5,0,0" /></StackPanel>
+              <Border Style="{StaticResource CardStyle}" Margin="0,0,0,14"><StackPanel><TextBlock Text="连接设置" Style="{StaticResource SectionTitleStyle}" /><TextBlock Text="API 地址" Style="{StaticResource FieldLabelStyle}" Margin="1,17,0,0" /><TextBox x:Name="SettingsApiUrlInput" /><Button Content="保存地址并返回登录" Style="{StaticResource PrimaryButtonStyle}" HorizontalAlignment="Left" Click="SaveApiSettingsButton_Click" /><Separator /><TextBlock Text="本地服务与数据" Style="{StaticResource FieldLabelStyle}" /><TextBlock x:Name="LocalServiceStatus" Text="尚未检测" Style="{StaticResource CaptionStyle}" Margin="0,5,0,10" TextWrapping="Wrap" /><WrapPanel><Button Content="检测环境" Click="DiagnoseServiceButton_Click" /><Button Content="启动本地服务" Click="StartServiceButton_Click" /><Button Content="停止服务" Click="StopServiceButton_Click" /><Button Content="备份数据" Click="BackupButton_Click" /></WrapPanel><Separator /><WrapPanel><CheckBox x:Name="StartWithWindowsInput" Content="开机自动启动 JobFlow" Click="StartWithWindowsInput_Click" /><CheckBox x:Name="DarkModeInput" Content="深色模式" Margin="18,0,0,0" Click="DarkModeInput_Click" /></WrapPanel><Button Content="检查更新" HorizontalAlignment="Left" Margin="0,14,0,0" Click="CheckUpdateButton_Click" /></StackPanel></Border>
+              <Border Style="{StaticResource CardStyle}" Margin="0,0,0,14"><StackPanel><TextBlock Text="修改密码" Style="{StaticResource SectionTitleStyle}" /><TextBlock Text="当前密码" Style="{StaticResource FieldLabelStyle}" Margin="1,17,0,0" /><PasswordBox x:Name="CurrentPasswordInput" /><TextBlock Text="新密码" Style="{StaticResource FieldLabelStyle}" /><PasswordBox x:Name="NewPasswordInput" /><Button Content="更新密码" Style="{StaticResource PrimaryButtonStyle}" HorizontalAlignment="Left" Click="ChangePasswordButton_Click" /></StackPanel></Border>
+              <Border Style="{StaticResource CardStyle}" BorderBrush="#E9C8BF"><StackPanel><TextBlock Text="账户操作" Style="{StaticResource SectionTitleStyle}" /><TextBlock Text="删除账户会永久清除服务端保存的全部个人数据。" Style="{StaticResource CaptionStyle}" Margin="0,5,0,15" /><WrapPanel><Button Content="退出登录" Click="LogoutButton_Click" /><Button Content="永久删除账户" Style="{StaticResource DangerButtonStyle}" Click="DeleteAccountButton_Click" /></WrapPanel></StackPanel></Border>
+            </StackPanel></ScrollViewer>
+          </TabItem>
+        </TabControl>
+        <Border Grid.Row="1" Background="#F3E5DD" CornerRadius="8" Padding="10,7" Margin="2,10,2,0">
+          <Border.Style>
+            <Style TargetType="Border">
+              <Setter Property="Visibility" Value="Visible" />
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding Text, ElementName=WorkspaceStatus}" Value=""><Setter Property="Visibility" Value="Collapsed" /></DataTrigger>
+              </Style.Triggers>
+            </Style>
+          </Border.Style>
+          <TextBlock x:Name="WorkspaceStatus" Foreground="#9A5944" TextWrapping="Wrap" FontSize="11.5" />
+        </Border>
+      </Grid>
+    </DockPanel>
+
+    <Border x:Name="Composer" Visibility="Collapsed" Background="#B81D221F" Panel.ZIndex="10">
+      <Border Width="640" MaxHeight="780" Background="White" BorderBrush="#DFDED7" BorderThickness="1" CornerRadius="18" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Border.Effect><DropShadowEffect Color="#252722" BlurRadius="35" ShadowDepth="10" Opacity="0.25" /></Border.Effect>
+        <Grid><Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="*" /></Grid.RowDefinitions>
+          <Border Background="#F2F4E7" CornerRadius="18,18,0,0" Padding="24,18"><DockPanel><StackPanel><TextBlock Text="新增投递" Style="{StaticResource PageTitleStyle}" FontSize="21" /><TextBlock Text="记录岗位信息和下一步行动。" Style="{StaticResource CaptionStyle}" Margin="0,4,0,0" /></StackPanel><Button Content="取消" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0" Click="HideComposer_Click" /></DockPanel></Border>
+          <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto"><StackPanel Margin="24,20,24,24">
+            <Grid><Grid.ColumnDefinitions><ColumnDefinition /><ColumnDefinition /></Grid.ColumnDefinitions><StackPanel Margin="0,0,7,0"><TextBlock Text="公司名称 *" Style="{StaticResource FieldLabelStyle}" /><TextBox x:Name="CompanyInput" /></StackPanel><StackPanel Grid.Column="1" Margin="7,0,0,0"><TextBlock Text="岗位名称 *" Style="{StaticResource FieldLabelStyle}" /><TextBox x:Name="TitleInput" /></StackPanel></Grid>
+            <Grid><Grid.ColumnDefinitions><ColumnDefinition /><ColumnDefinition /></Grid.ColumnDefinitions><StackPanel Margin="0,0,7,0"><TextBlock Text="地点" Style="{StaticResource FieldLabelStyle}" /><TextBox x:Name="LocationInput" /></StackPanel><StackPanel Grid.Column="1" Margin="7,0,0,0"><TextBlock Text="来源" Style="{StaticResource FieldLabelStyle}" /><TextBox x:Name="SourceInput" /></StackPanel></Grid>
+            <DockPanel><TextBlock Text="岗位链接" Style="{StaticResource FieldLabelStyle}" /><Button Content="读取剪贴板链接" HorizontalAlignment="Right" Padding="9,4" Click="PasteUrlButton_Click" /></DockPanel><TextBox x:Name="SourceUrlInput" />
+            <TextBlock Text="职位描述" Style="{StaticResource FieldLabelStyle}" /><TextBox x:Name="JdInput" Height="82" AcceptsReturn="True" TextWrapping="Wrap" VerticalContentAlignment="Top" />
+            <Grid><Grid.ColumnDefinitions><ColumnDefinition /><ColumnDefinition /></Grid.ColumnDefinitions><StackPanel Margin="0,0,7,0"><TextBlock Text="阶段" Style="{StaticResource FieldLabelStyle}" /><ComboBox x:Name="CreateStatusInput"><ComboBoxItem Tag="saved" IsSelected="True">待投递</ComboBoxItem><ComboBoxItem Tag="applied">已投递</ComboBoxItem><ComboBoxItem Tag="assessment">笔试</ComboBoxItem><ComboBoxItem Tag="interview">面试</ComboBoxItem><ComboBoxItem Tag="offer">Offer</ComboBoxItem><ComboBoxItem Tag="closed">已结束</ComboBoxItem></ComboBox></StackPanel><StackPanel Grid.Column="1" Margin="7,0,0,0"><TextBlock Text="简历版本" Style="{StaticResource FieldLabelStyle}" /><ComboBox x:Name="CreateResumeInput" DisplayMemberPath="Name" SelectedValuePath="Id" /></StackPanel></Grid>
+            <TextBlock Text="下一步时间（yyyy-MM-dd HH:mm，可留空）" Style="{StaticResource FieldLabelStyle}" /><TextBox x:Name="NextActionInput" />
+            <TextBlock Text="常用备注" Style="{StaticResource FieldLabelStyle}" /><ComboBox SelectionChanged="NoteTemplate_SelectionChanged"><ComboBoxItem IsSelected="True">选择模板…</ComboBoxItem><ComboBoxItem>已投递，等待反馈</ComboBoxItem><ComboBoxItem>需要准备系统设计与项目复盘</ComboBoxItem><ComboBoxItem>一周后礼貌跟进</ComboBoxItem></ComboBox>
+            <TextBlock Text="备注" Style="{StaticResource FieldLabelStyle}" /><TextBox x:Name="NotesInput" Height="66" AcceptsReturn="True" TextWrapping="Wrap" VerticalContentAlignment="Top" />
+            <TextBlock x:Name="ComposerStatus" Foreground="{StaticResource DangerBrush}" TextWrapping="Wrap" />
+            <Button Content="保存投递" Style="{StaticResource PrimaryButtonStyle}" HorizontalAlignment="Right" MinWidth="112" Margin="0,14,0,0" Click="SaveDraftButton_Click" />
+          </StackPanel></ScrollViewer>
+        </Grid>
+      </Border>
+    </Border>
+
+    <Border x:Name="FirstRunPanel" Visibility="Collapsed" Background="#D91D221F" Panel.ZIndex="30">
+      <Border Width="620" Padding="34" Style="{StaticResource CardStyle}" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel>
+          <TextBlock Text="欢迎使用 JobFlow" Style="{StaticResource PageTitleStyle}" />
+          <TextBlock Text="安装包已包含本地数据服务，数据只保存在当前 Windows 账户中；也可以连接已有 API。" Style="{StaticResource CaptionStyle}" TextWrapping="Wrap" Margin="0,8,0,20" />
+          <Border Background="#F2F4E7" CornerRadius="10" Padding="14"><TextBlock x:Name="FirstRunStatus" Text="本地服务会随 JobFlow 自动启动，无需安装 Docker 或 Python。" Foreground="#526D60" TextWrapping="Wrap" /></Border>
+          <WrapPanel Margin="0,18,0,0"><Button Content="检测本地服务" Click="FirstRunDiagnose_Click" /><Button Content="启动本地服务" Style="{StaticResource PrimaryButtonStyle}" Click="FirstRunStart_Click" /></WrapPanel>
+          <Separator Margin="0,18" />
+          <TextBlock Text="远程 API 地址（可选）" Style="{StaticResource FieldLabelStyle}" /><TextBox x:Name="FirstRunApiUrl" Text="http://localhost:8000/api/v1/" />
+          <Button Content="完成设置并进入登录" HorizontalAlignment="Right" Margin="0,16,0,0" Click="FinishFirstRun_Click" />
+        </StackPanel>
+      </Border>
+    </Border>
+  </Grid>
+</Window>

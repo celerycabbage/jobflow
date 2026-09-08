@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jobflow-api"
+version = "0.3.0"
+description = "Backend service for the JobFlow application tracker"
+requires-python = ">=3.11"
+dependencies = [
+  "alembic>=1.16,<2",
+  "celery[redis]>=5.5,<6",
+  "fastapi>=0.116,<1",
+  "uvicorn[standard]>=0.35,<1",
+  "sqlalchemy>=2.0,<3",
+  "pydantic-settings>=2.10,<3",
+  "PyJWT>=2.10,<3",
+  "pymysql>=1.1,<2",
+  "email-validator>=2.2,<3",
+  "python-multipart>=0.0.20,<1",
+  "prometheus-client>=0.22,<1",
+  "redis>=6.2,<7",
+]
+
+[project.optional-dependencies]
+dev = [
+  "httpx>=0.28,<1",
+  "pyinstaller>=6.22,<7",
+  "pytest>=8.4,<9",
+  "pytest-cov>=6.2,<7",
+  "ruff>=0.12,<1",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.coverage.run]
+omit = ["app/desktop_server.py"]
+
+[tool.setuptools.packages.find]
+include = ["app*"]
+exclude = ["migrations*", "tests*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+# FastAPI intentionally resolves dependencies from function defaults.
+ignore = ["B008"]

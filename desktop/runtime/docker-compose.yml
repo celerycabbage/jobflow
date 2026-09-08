@@ -1,0 +1,67 @@
+name: jobflow-desktop
+services:
+  mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: jobflow
+      MYSQL_USER: jobflow
+      MYSQL_PASSWORD: jobflow
+      MYSQL_ROOT_PASSWORD: local-root-password
+    volumes: [jobflow_mysql:/var/lib/mysql]
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-plocal-root-password"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+  redis:
+    image: redis:7.4-alpine
+    command: redis-server --appendonly yes
+    volumes: [jobflow_redis:/data]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  api:
+    image: __JOBFLOW_API_IMAGE__
+    environment:
+      DATABASE_URL: mysql+pymysql://jobflow:jobflow@mysql:3306/jobflow
+      REDIS_URL: redis://redis:6379/0
+      JWT_SECRET: ${JOBFLOW_JWT_SECRET:-desktop-local-secret-change-before-sharing-32bytes}
+      CORS_ORIGINS: http://localhost:5173,http://127.0.0.1:5173
+    ports: ["127.0.0.1:8000:8000"]
+    volumes: [jobflow_uploads:/app/uploads]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 8s
+      timeout: 5s
+      retries: 30
+    depends_on:
+      mysql: { condition: service_healthy }
+      redis: { condition: service_healthy }
+  worker:
+    image: __JOBFLOW_API_IMAGE__
+    command: celery -A app.celery_app:celery_app worker --loglevel=INFO --uid=nobody --gid=nogroup
+    environment:
+      DATABASE_URL: mysql+pymysql://jobflow:jobflow@mysql:3306/jobflow
+      REDIS_URL: redis://redis:6379/0
+      JWT_SECRET: ${JOBFLOW_JWT_SECRET:-desktop-local-secret-change-before-sharing-32bytes}
+    volumes: [jobflow_uploads:/app/uploads]
+    restart: unless-stopped
+    depends_on:
+      api: { condition: service_healthy }
+  scheduler:
+    image: __JOBFLOW_API_IMAGE__
+    command: celery -A app.celery_app:celery_app beat --loglevel=INFO
+    environment:
+      DATABASE_URL: mysql+pymysql://jobflow:jobflow@mysql:3306/jobflow
+      REDIS_URL: redis://redis:6379/0
+      JWT_SECRET: ${JOBFLOW_JWT_SECRET:-desktop-local-secret-change-before-sharing-32bytes}
+    restart: unless-stopped
+    depends_on:
+      api: { condition: service_healthy }
+volumes:
+  jobflow_mysql:
+  jobflow_redis:
+  jobflow_uploads:

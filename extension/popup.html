@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="popup.css" />
+    <title>保存到 JobFlow</title>
+  </head>
+  <body>
+    <main>
+      <header>
+        <span class="mark">→</span>
+        <div><strong>JobFlow</strong><small>岗位采集器</small></div>
+      </header>
+      <div class="connection"><span id="connection-dot"></span><span id="connection">正在检查 JobFlow…</span></div>
+      <p>读取当前页面标题、链接和选中的 JD 文本，确认后加入本地待同步队列。</p>
+      <button id="capture">读取当前岗位 <span>→</span></button>
+      <form id="preview" hidden>
+        <label>公司<input id="company" maxlength="160" /></label>
+        <label>岗位<input id="title" maxlength="200" required /></label>
+        <label>链接<input id="url" type="url" /></label>
+        <label>JD 摘要<textarea id="jd" rows="5" maxlength="4000"></textarea></label>
+        <div class="button-row"><button type="button" class="secondary" id="cancel">取消</button><button id="save">保存并打开</button></div>
+      </form>
+      <span id="status" role="status"></span>
+      <section class="drafts"><header><strong>待同步草稿</strong><small id="draft-count">0</small></header><div id="draft-list"></div></section>
+      <footer>不会自动投递或向招聘网站写入数据</footer>
+    </main>
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>

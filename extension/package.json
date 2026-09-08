@@ -1,0 +1,9 @@
+{
+  "name": "jobflow-extension",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "check": "node --check popup.js && node --check background.js"
+  }
+}

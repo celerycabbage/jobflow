@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
+    <TargetPlatformMoniker>Windows,Version=7.0</TargetPlatformMoniker>
+    <TargetPlatformSdkPath Condition="'$(TargetPlatformSdkPath)' == '' and !Exists('C:\Program Files (x86)\Microsoft SDKs\Windows') and Exists('C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.5')">C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.5\</TargetPlatformSdkPath>
+    <TargetPlatformDisplayName Condition="'$(TargetPlatformSdkPath)' != '' and '$(TargetPlatformDisplayName)' == ''">Windows</TargetPlatformDisplayName>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <AssemblyName>JobFlow.Desktop</AssemblyName>
+    <RootNamespace>JobFlow.Desktop</RootNamespace>
+    <Version>0.3.0</Version>
+    <AssemblyVersion>0.3.0.0</AssemblyVersion>
+    <FileVersion>0.3.0.0</FileVersion>
+    <InformationalVersion>0.3.0</InformationalVersion>
+    <ApplicationIcon>Assets\JobFlow.ico</ApplicationIcon>
+  </PropertyGroup>
+</Project>

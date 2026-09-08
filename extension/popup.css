@@ -1,0 +1,34 @@
+:root { font-family: Inter, "Microsoft YaHei", system-ui, sans-serif; color: #252722; }
+* { box-sizing: border-box; }
+body { width: 360px; margin: 0; background: #f7f6f1; }
+main { padding: 20px; }
+header { display: flex; align-items: center; gap: 10px; }
+header div { display: grid; }
+header strong { font-size: 17px; }
+header small { color: #8b8d86; font-size: 10px; }
+.mark { width: 31px; height: 31px; border-radius: 9px; display: grid; place-items: center; color: white; background: #395b4b; font-weight: 700; transform: rotate(-6deg); }
+p { margin: 19px 0; color: #6e716a; font-size: 12px; line-height: 1.7; }
+button { width: 100%; height: 42px; padding: 0 14px; border: 0; border-radius: 10px; display: flex; align-items: center; justify-content: space-between; color: #fff; background: #395b4b; font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; }
+button:hover { background: #294338; }
+button:disabled { opacity: .65; cursor: wait; }
+#status { display: block; min-height: 17px; margin-top: 9px; color: #a55346; font-size: 10px; }
+footer { padding-top: 13px; border-top: 1px solid #e2e1da; color: #a0a19b; font-size: 9px; text-align: center; }
+.connection { margin-top: 16px; display: flex; align-items: center; gap: 7px; color: #7d8078; font-size: 10px; }
+.connection > span:first-child { width: 7px; height: 7px; border-radius: 50%; background: #b8b9b4; }
+.connection > span.online { background: #6e914c; }
+form { margin-top: 14px; display: grid; gap: 10px; }
+label { display: grid; gap: 5px; color: #70736c; font-size: 10px; font-weight: 700; }
+input, textarea { width: 100%; border: 1px solid #d8d8d1; border-radius: 8px; padding: 8px 9px; color: #292c27; background: #fff; font: inherit; font-size: 11px; outline: none; }
+textarea { resize: vertical; }
+.button-row { display: grid; grid-template-columns: .7fr 1.3fr; gap: 8px; }
+button.secondary { color: #5f635c; background: #e8e7e1; }
+.drafts { margin-top: 15px; border-top: 1px solid #e2e1da; padding-top: 13px; }
+.drafts > header { justify-content: space-between; }
+.drafts > header strong { font-size: 11px; }
+.drafts > header small { min-width: 20px; padding: 2px 6px; border-radius: 7px; text-align: center; background: #e5e7da; }
+.draft-row { margin-top: 8px; padding: 9px; border: 1px solid #e2e1da; border-radius: 8px; display: grid; grid-template-columns: 1fr auto; gap: 5px 8px; background: #fff; }
+.draft-row strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 10px; }
+.draft-row small { color: #979992; font-size: 8px; }
+.draft-row .draft-actions { grid-row: 1 / 3; grid-column: 2; display: flex; gap: 4px; }
+.draft-row .draft-actions button { width: auto; height: 28px; padding: 0 8px; font-size: 9px; }
+.draft-empty { margin: 10px 0 0; color: #a0a29c; font-size: 9px; }

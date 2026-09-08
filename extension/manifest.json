@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "JobFlow 岗位采集器",
+  "version": "0.3.0",
+  "description": "预览、离线保存并将招聘页面岗位信息带入本地 JobFlow。",
+  "permissions": ["activeTab", "scripting", "storage"],
+  "host_permissions": ["http://localhost:5173/*", "http://localhost:8000/*"],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "保存到 JobFlow",
+    "default_popup": "popup.html"
+  }
+}
